@@ -1,0 +1,49 @@
+{
+  "data": [
+    {
+      "question": "Siapakah penemu benua amerika?",
+      "image": "",
+      "ans_a": "Christoper Columbus",
+      "ans_b": "Matt Jewelry",
+      "ans_c": "Barrack Obama",
+      "ans_d": "Adelbert Einstein",
+      "key": "a"
+    },
+    {
+      "question": "Presiden indonesia nomor 1 adalah?",
+      "image": "",
+      "ans_a": "Jokowi",
+      "ans_b": "Soekarno",
+      "ans_c": "Habibi",
+      "ans_d": "Gus Dur",
+      "key": "b"
+    },
+	{
+      "question": "Lawan Kata Benar?",
+      "image": "",
+      "ans_a": "Tidak Benar",
+      "ans_b": "Tepat",
+      "ans_c": "Salah",
+      "ans_d": "Perfect",
+      "key": "c"
+    },
+	{
+      "question": "Denpasar adalah ibukota provinsi?",
+      "image": "",
+      "ans_a": "Bali",
+      "ans_b": "Jakarta",
+      "ans_c": "Jawa Timur",
+      "ans_d": "Sulawesi Tenggara",
+      "key": "a"
+    },
+	{
+      "question": "Gambar berikut mengandung?",
+      "image": "nasi.jpg",
+      "ans_a": "Racun",
+      "ans_b": "Protein",
+      "ans_c": "Lemak",
+      "ans_d": "Karbohidrat",
+      "key": "d"
+    }
+  ]
+}
