@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Video;
+using UnityEngine.XR;
 
 public class VRManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class VRManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        XRSettings.enabled = true;
         tvObject.SetActive(false);
         RenderSettings.skybox = null;
 

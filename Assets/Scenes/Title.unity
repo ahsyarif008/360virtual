@@ -4268,17 +4268,17 @@ MonoBehaviour:
   serverBatching: 0
   serverBatchInterval: 0
   offlineScene: Assets/Scenes/Title.unity
-  onlineScene: Assets/Scenes/New Scene.unity
+  onlineScene: Assets/Scenes/SceneGame.unity
   transport: {fileID: 891762627}
   networkAddress: localhost
   maxConnections: 4
   disconnectInactiveConnections: 0
   disconnectInactiveTimeout: 60
   authenticator: {fileID: 0}
-  playerPrefab: {fileID: 449802645721213856, guid: e1299008405d14b17b1ca459a6cd44a2,
+  playerPrefab: {fileID: 3726510707442301951, guid: 56affa879f5e8d143bae5b45fea0fe0e,
     type: 3}
   autoCreatePlayer: 1
-  playerSpawnMethod: 0
+  playerSpawnMethod: 1
   spawnPrefabs: []
   networkDiscovery: {fileID: 891762626}
 --- !u!114 &891762626
