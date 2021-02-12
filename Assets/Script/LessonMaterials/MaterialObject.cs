@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using UnityEngine.Events;
+using UnityEngine.Video;
 
 [CreateAssetMenu(fileName = "Data", menuName = "Matherials/ObjectMaterial", order = 1)]
 public class MaterialObject : ScriptableObject
@@ -10,6 +11,8 @@ public class MaterialObject : ScriptableObject
     public MaterialType materialType;
     public MapInfo[] mapInfos;
     public Material skyBox;
+    public GameObject prefabObject;
+    public VideoClip videoClip;
 
 }
 
