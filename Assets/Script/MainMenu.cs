@@ -29,7 +29,7 @@ public class MainMenu : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        XRSettings.enabled = false;
+       // XRSettings.enabled = false;
         deviceIpAddress.text = "Alamat IP: ";
         passwordField.inputType = InputField.InputType.Password;
 
