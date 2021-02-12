@@ -9,6 +9,7 @@ public class MaterialObject : ScriptableObject
     public enum MaterialType { Type3D, TypeVideo, TypeImage };
     public MaterialType materialType;
     public MapInfo[] mapInfos;
+    public Material skyBox;
 
 }
 
