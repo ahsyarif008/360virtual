@@ -17,28 +17,44 @@ public class VRManager : NetworkBehaviour
     [SerializeField] Transform parentTeacherInfo;
     [SerializeField] Transform object3DPos;
     [SerializeField] GameObject prefabInfoItem;
+    [SerializeField] GameObject classItem;
 
-    [SyncVar] int currentMaterialIndex;
+    [SyncVar(hook = nameof(StartMaterials))] int currentMaterialIndex = 100;
 
     GameObject object3D;
     // Start is called before the first frame update
-    void Start()
+
+    public override void OnStartServer()
+    {
+        base.OnStartServer();
+
+        SetupTeacherGUIPanel();
+        InitialClient();
+
+    }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        InitialClient();
+    }
+
+
+    void InitialClient()
     {
         XRSettings.enabled = true;
         tvObject.SetActive(false);
         RenderSettings.skybox = null;
-
-        SetupTeacherGUIPanel();
     }
 
     void OnEnable()
     {
-        MapItemInfo.StartLesson += StartMaterials;
+        MapItemInfo.StartLesson += SetMaterialIndex;
     }
 
     void OnDestroy()
     {
-        MapItemInfo.StartLesson -= StartMaterials;
+        MapItemInfo.StartLesson -= SetMaterialIndex;
     }
 
     void SetupTeacherGUIPanel()
@@ -68,12 +84,17 @@ public class VRManager : NetworkBehaviour
         var type = material.materialType;
     }
 
-    //public void BeginLesson
-    void StartMaterials(int index)
+    void SetMaterialIndex(int index)
     {
-
         currentMaterialIndex = index;
 
+        //after this code is executed, due to syncVar, start materials function will be executed
+    }
+
+
+    //public void BeginLesson
+    void StartMaterials(int oldIndex, int newIndex)
+    {
         //registeredMaterials
         MaterialObject selectedMaterial = lessonMaterials[currentMaterialIndex];
 
