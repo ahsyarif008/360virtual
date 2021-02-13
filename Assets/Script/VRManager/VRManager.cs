@@ -5,9 +5,11 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.XR;
+using Mirror;
 
-public class VRManager : MonoBehaviour
+public class VRManager : NetworkBehaviour
 {
+
     [SerializeField] MaterialObject[] lessonMaterials;
     [SerializeField] GameObject teacherGUI;
     [SerializeField] GameObject tvObject;
@@ -15,6 +17,8 @@ public class VRManager : MonoBehaviour
     [SerializeField] Transform parentTeacherInfo;
     [SerializeField] Transform object3DPos;
     [SerializeField] GameObject prefabInfoItem;
+
+    [SyncVar] int currentMaterialIndex;
 
     GameObject object3D;
     // Start is called before the first frame update
@@ -68,8 +72,10 @@ public class VRManager : MonoBehaviour
     void StartMaterials(int index)
     {
 
+        currentMaterialIndex = index;
+
         //registeredMaterials
-        MaterialObject selectedMaterial = lessonMaterials[index];
+        MaterialObject selectedMaterial = lessonMaterials[currentMaterialIndex];
 
         //setup skybox
         if (selectedMaterial.skyBox != null)
