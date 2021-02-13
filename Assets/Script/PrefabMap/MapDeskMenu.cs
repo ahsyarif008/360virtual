@@ -4,12 +4,15 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
+using Mirror;
 
-public class MapItemInfo : MonoBehaviour
+public class MapDeskMenu : MonoBehaviour
 {
-    public delegate void OnStartLesson(int index);
-    public static OnStartLesson StartLesson;
-    public int materialIndex;
+    public enum DeskMenuType { OpenMenu, BackToMain }
+    public DeskMenuType deskMenuType;
+
+    [SerializeField] GameObject teacherPanel;
     float sliderValue = 0;
     float intervalValue = 0.01f;
     public TMP_Text txtInfo;
@@ -35,12 +38,26 @@ public class MapItemInfo : MonoBehaviour
             sliderInfo.value = sliderValue;
             sliderValue += intervalValue;
         }
-         StartMaterials();
+        if (deskMenuType == DeskMenuType.OpenMenu)
+            TogglePanelMenu(true);
+        else
+            BackToMain();
+
     }
 
-    void StartMaterials()
+    public void TogglePanelMenu(bool activeStat)
     {
-        StartLesson?.Invoke(materialIndex);
+        teacherPanel.SetActive(activeStat);
     }
+
+    public void BackToMain()
+    {
+        MyNetworkManager networkManager = Singleton.Instance.networkManager;
+        networkManager.StopHost();
+
+        SceneManager.LoadScene("Title");
+
+    }
+
 
 }

@@ -88,6 +88,8 @@ public class VRManager : NetworkBehaviour
             itemInfo.materialIndex = i;
 
         }
+
+        teacherGUI.SetActive(false);
     }
 
     public void SelectingLesson(Collider2D targetLesson)
@@ -107,6 +109,8 @@ public class VRManager : NetworkBehaviour
     //public void BeginLesson
     void StartMaterials(int oldIndex, int newIndex)
     {
+        teacherGUI.SetActive(false);
+        
         //registeredMaterials
         MaterialObject selectedMaterial = Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials[currentMaterialIndex];
 

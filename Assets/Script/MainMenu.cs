@@ -28,13 +28,17 @@ public class MainMenu : MonoBehaviour
     public GameObject loadingScreen, btnBack, btnClientStart;
 
     public MyNetworkManager networkManager;
-    public NetworkDiscovery networkDiscovery;
+    public MyNetworkDiscovery networkDiscovery;
 
     // Use this for initialization
     void Start()
     {
         XRSettings.enabled = false;
         txtClientTitle.text = "Tunggu pemandu memulai server ...........";
+
+        networkManager = Singleton.Instance.networkManager;
+        networkDiscovery = Singleton.Instance.networkDiscovery;
+
 
         screens = new GameObject[] { modeUI, materiUI, pengembangUI, petunjukUI, roomUI };
         NavigateTo("main");
