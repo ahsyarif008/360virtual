@@ -11,9 +11,12 @@ using Mirror;
 
 public class MainMenu : MonoBehaviour
 {
-    public int state = 0;
-    public InputField passwordField;
-    public Text deviceIpAddress, passwordTitle, btnClientLabel, txtClientTitle;
+    [Header("Menu Element")]
+    public Transform parentMenu;
+    public GameObject prefabMenuItem;
+
+    [Header("Other")]
+    public Text btnClientLabel, txtClientTitle;
     public GameObject learningSelectScreen, passwordScreen;
 
     enum AppState { main, pengembang, petunjuk, selectMode, selectMateri, selectRoom };
@@ -24,19 +27,18 @@ public class MainMenu : MonoBehaviour
     public GameObject modeUI, materiUI, pengembangUI, petunjukUI, roomUI;
     public GameObject loadingScreen, btnBack, btnClientStart;
 
+    public MyNetworkManager networkManager;
     public NetworkDiscovery networkDiscovery;
 
     // Use this for initialization
     void Start()
     {
         XRSettings.enabled = false;
-        deviceIpAddress.text = "Alamat IP: ";
-        passwordField.inputType = InputField.InputType.Password;
-
         txtClientTitle.text = "Tunggu pemandu memulai server ...........";
 
         screens = new GameObject[] { modeUI, materiUI, pengembangUI, petunjukUI, roomUI };
         NavigateTo("main");
+        SetupLessonMenuList();
     }
 
     // Update is called once per frame
@@ -46,6 +48,41 @@ public class MainMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             BackButton();
+        }
+    }
+
+    void SetupLessonMenuList()
+    {
+        MaterialSubtheme[] materialSubthemes = Singleton.Instance.materialSubthemes;
+        for (int i = 0; i < materialSubthemes.Length; i++)
+        {
+            int x = i;
+            //setup subtheme
+            GameObject item = Instantiate(prefabMenuItem, Vector2.zero, Quaternion.identity, parentMenu);
+            item.GetComponent<RectTransform>().localScale = Vector2.one;
+
+            MapItemMenu mapItemMenu = item.GetComponent<MapItemMenu>();
+            mapItemMenu.txtMenuItem.text = materialSubthemes[i].subthemeName;
+            mapItemMenu.btnAction.interactable = false;
+
+            for (int j = 0; j < materialSubthemes[i].lessons.Length; j++)
+            {
+                int y = j;
+                //setup lesson
+                GameObject itemLesson = Instantiate(prefabMenuItem, Vector2.zero, Quaternion.identity, parentMenu);
+                itemLesson.GetComponent<RectTransform>().localScale = Vector2.one;
+
+                MapItemMenu mapItemMenuLesson = itemLesson.GetComponent<MapItemMenu>();
+                mapItemMenuLesson.txtMenuItem.text = materialSubthemes[i].lessons[j].lessonName;
+                mapItemMenuLesson.btnAction.interactable = true;
+                mapItemMenuLesson.btnAction.onClick.RemoveAllListeners();
+                mapItemMenuLesson.btnAction.onClick.AddListener(() =>
+                {
+                    Singleton.Instance.SetUsageIndex(x,y);
+                    networkManager.StartHost();
+                });
+            }
+
         }
     }
 
@@ -72,35 +109,6 @@ public class MainMenu : MonoBehaviour
             NetworkManager.singleton.StartClient(resp.uri);
         });
 
-    }
-
-    public void PromptPassword()
-    {
-        passwordScreen.SetActive(true);
-    }
-
-    public void SelectLearningModule()
-    {
-
-        if (passwordField.text == "1234")
-        {
-            learningSelectScreen.SetActive(true);
-            passwordScreen.SetActive(false);
-        }
-        else
-        {
-            passwordTitle.text = "Password salah";
-        }
-    }
-
-    public void GoToImage()
-    {
-        SceneManager.LoadScene("Stage");
-    }
-
-    public void GoToVideo()
-    {
-        SceneManager.LoadScene("StageVideo");
     }
 
     public void BackButton()

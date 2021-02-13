@@ -9,8 +9,6 @@ using Mirror;
 
 public class VRManager : NetworkBehaviour
 {
-
-    [SerializeField] MaterialObject[] lessonMaterials;
     [SerializeField] GameObject teacherGUI;
     [SerializeField] GameObject tvObject;
     [SerializeField] VideoPlayer videoPlayer;
@@ -20,6 +18,9 @@ public class VRManager : NetworkBehaviour
     [SerializeField] GameObject classItem;
 
     [SyncVar(hook = nameof(StartMaterials))] int currentMaterialIndex = 100;
+    [SyncVar(hook = nameof(SetupCurrentIndexSubtheme))] int indexSubtheme = 0;
+    [SyncVar(hook = nameof(SetupCurrentIndexLesson))] int indexLesson = 0;
+
 
     GameObject object3D;
     // Start is called before the first frame update
@@ -30,6 +31,8 @@ public class VRManager : NetworkBehaviour
 
         SetupTeacherGUIPanel();
         InitialClient();
+
+
 
     }
 
@@ -57,10 +60,19 @@ public class VRManager : NetworkBehaviour
         MapItemInfo.StartLesson -= SetMaterialIndex;
     }
 
+    void SetupCurrentIndexSubtheme(int oldNum, int newNum)
+    {
+        indexSubtheme = newNum;
+    }
+    void SetupCurrentIndexLesson(int oldNum, int newNum)
+    {
+        indexLesson = newNum;
+    }
+
     void SetupTeacherGUIPanel()
     {
         //loop through materials
-        for (int i = 0; i < lessonMaterials.Length; i++)
+        for (int i = 0; i < Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials.Length; i++)
         {
             //instantiate initialize
             GameObject item = Instantiate(prefabInfoItem, Vector3.zero, transform.rotation, parentTeacherInfo);
@@ -72,7 +84,7 @@ public class VRManager : NetworkBehaviour
             TMP_Text txtInfo = itemInfo.txtInfo;
 
             //assign value
-            txtInfo.text = lessonMaterials[i].materialName;
+            txtInfo.text = Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials[i].materialName;
             itemInfo.materialIndex = i;
 
         }
@@ -96,7 +108,7 @@ public class VRManager : NetworkBehaviour
     void StartMaterials(int oldIndex, int newIndex)
     {
         //registeredMaterials
-        MaterialObject selectedMaterial = lessonMaterials[currentMaterialIndex];
+        MaterialObject selectedMaterial = Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials[currentMaterialIndex];
 
         //setup skybox
         if (selectedMaterial.skyBox != null)
