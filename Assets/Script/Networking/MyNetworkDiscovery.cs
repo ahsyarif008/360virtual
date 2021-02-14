@@ -8,7 +8,11 @@ using UnityEngine.Events;
 public class MyNetworkDiscovery : NetworkDiscovery
 {
     MainMenu mainMenuObject;
-    void OnSceneLoaded()
+
+    void OnEnable(){
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if (SceneManager.GetActiveScene().name == "Title")
         {

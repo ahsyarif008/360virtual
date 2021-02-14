@@ -15,6 +15,7 @@ public class MapDeskMenu : MonoBehaviour
     [SerializeField] GameObject teacherPanel;
     float sliderValue = 0;
     float intervalValue = 0.01f;
+    public float addedValue = 0.01f;
     public TMP_Text txtInfo;
     public Slider sliderInfo;
 
@@ -36,7 +37,7 @@ public class MapDeskMenu : MonoBehaviour
         {
             yield return new WaitForSeconds(intervalValue);
             sliderInfo.value = sliderValue;
-            sliderValue += intervalValue;
+            sliderValue += addedValue;
         }
         if (deskMenuType == DeskMenuType.OpenMenu)
             TogglePanelMenu(true);

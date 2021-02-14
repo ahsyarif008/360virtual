@@ -12,11 +12,7 @@ public class MyNetworkManager : NetworkManager
     {
         base.StartHost();
         networkDiscovery.AdvertiseServer();
-    }
-
-    public override void OnDestroy()
-    {
-         NetworkManager.singleton.StopHost();
+        Debug.Log("advertise server");
     }
 
 }

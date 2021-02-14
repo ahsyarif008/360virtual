@@ -99,6 +99,7 @@ public class MainMenu : MonoBehaviour
         btnBack.SetActive(true);
         roomUI.SetActive(true);
         networkDiscovery.StartDiscovery();
+        Debug.Log("begin discovery");
     }
 
     public void DisplayRoomList(ServerResponse resp)

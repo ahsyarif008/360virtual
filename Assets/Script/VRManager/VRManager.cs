@@ -31,9 +31,6 @@ public class VRManager : NetworkBehaviour
 
         SetupTeacherGUIPanel();
         InitialClient();
-
-
-
     }
 
     public override void OnStartClient()
@@ -67,6 +64,23 @@ public class VRManager : NetworkBehaviour
     void SetupCurrentIndexLesson(int oldNum, int newNum)
     {
         indexLesson = newNum;
+    }
+
+    void Update()
+    {
+        //cheat sheet
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            currentMaterialIndex = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            currentMaterialIndex = 1;
+        }
+          if (Input.GetKeyDown(KeyCode.E))
+        {
+            currentMaterialIndex = 2;
+        }
     }
 
     void SetupTeacherGUIPanel()
@@ -109,8 +123,12 @@ public class VRManager : NetworkBehaviour
     //public void BeginLesson
     void StartMaterials(int oldIndex, int newIndex)
     {
-        teacherGUI.SetActive(false);
+        Destroy(object3D);
+        tvObject.SetActive(false);
+        videoPlayer.Stop();
         
+        teacherGUI.SetActive(false);
+
         //registeredMaterials
         MaterialObject selectedMaterial = Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials[currentMaterialIndex];
 
@@ -118,9 +136,11 @@ public class VRManager : NetworkBehaviour
         if (selectedMaterial.skyBox != null)
         {
             RenderSettings.skybox = selectedMaterial.skyBox;
+            classItem.SetActive(false);
+        } else {
+            RenderSettings.skybox = null;
+            classItem.SetActive(true);
         }
-
-
 
         switch (selectedMaterial.materialType)
         {

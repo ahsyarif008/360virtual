@@ -35,7 +35,8 @@ public class MapItemInfo : MonoBehaviour
             sliderInfo.value = sliderValue;
             sliderValue += intervalValue;
         }
-         StartMaterials();
+        sliderValue = 0;
+        StartMaterials();
     }
 
     void StartMaterials()
