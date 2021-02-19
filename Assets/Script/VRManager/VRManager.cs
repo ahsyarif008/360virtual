@@ -85,8 +85,11 @@ public class VRManager : NetworkBehaviour
 
     void SetupTeacherGUIPanel()
     {
+        int idxSubtheme = Singleton.Instance.indexSubtheme;
+        int idxLesson = Singleton.Instance.indexLesson;
+
         //loop through materials
-        for (int i = 0; i < Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials.Length; i++)
+        for (int i = 0; i < Singleton.Instance.materialSubthemes[idxSubtheme].lessons[idxLesson].materials.Length; i++)
         {
             //instantiate initialize
             GameObject item = Instantiate(prefabInfoItem, Vector3.zero, transform.rotation, parentTeacherInfo);
@@ -98,7 +101,7 @@ public class VRManager : NetworkBehaviour
             TMP_Text txtInfo = itemInfo.txtInfo;
 
             //assign value
-            txtInfo.text = Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials[i].materialName;
+            txtInfo.text = Singleton.Instance.materialSubthemes[idxSubtheme].lessons[idxLesson].materials[i].materialName;
             itemInfo.materialIndex = i;
 
         }

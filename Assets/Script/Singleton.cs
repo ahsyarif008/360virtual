@@ -27,6 +27,8 @@ public class Singleton : MonoBehaviour
     public void SetUsageIndex(int idxSubtheme, int idxLesson){
         indexSubtheme = idxSubtheme;
         indexLesson = idxLesson;
+
+        Debug.Log("st " + indexSubtheme + "  leson " + indexLesson);
     }
 
     // Update is called once per frame
