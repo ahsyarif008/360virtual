@@ -17,7 +17,7 @@ public class VRManager : NetworkBehaviour
     [SerializeField] GameObject prefabInfoItem;
     [SerializeField] GameObject classItem;
 
-    [SyncVar(hook = nameof(StartMaterials))] int currentMaterialIndex = 100;
+    [SyncVar(hook = nameof(SetMaterialIndex))] int currentMaterialIndex = 100;
     [SyncVar(hook = nameof(SetupCurrentIndexSubtheme))] int indexSubtheme = 0;
     [SyncVar(hook = nameof(SetupCurrentIndexLesson))] int indexLesson = 0;
 
@@ -49,20 +49,22 @@ public class VRManager : NetworkBehaviour
 
     void OnEnable()
     {
-        MapItemInfo.StartLesson += SetMaterialIndex;
+        MapItemInfo.StartLesson += StartMaterials;
     }
 
     void OnDestroy()
     {
-        MapItemInfo.StartLesson -= SetMaterialIndex;
+        MapItemInfo.StartLesson -= StartMaterials;
     }
 
     void SetupCurrentIndexSubtheme(int oldNum, int newNum)
     {
+        Debug.Log("called sub");
         indexSubtheme = newNum;
     }
     void SetupCurrentIndexLesson(int oldNum, int newNum)
     {
+        Debug.Log("called lesson");
         indexLesson = newNum;
     }
 
@@ -77,7 +79,7 @@ public class VRManager : NetworkBehaviour
         {
             currentMaterialIndex = 1;
         }
-          if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             currentMaterialIndex = 2;
         }
@@ -85,11 +87,13 @@ public class VRManager : NetworkBehaviour
 
     void SetupTeacherGUIPanel()
     {
-        int idxSubtheme = Singleton.Instance.indexSubtheme;
-        int idxLesson = Singleton.Instance.indexLesson;
+        indexSubtheme = Singleton.Instance.indexSubtheme;
+        indexLesson = Singleton.Instance.indexLesson;
+
+        Debug.Log(indexSubtheme + "," + indexLesson);
 
         //loop through materials
-        for (int i = 0; i < Singleton.Instance.materialSubthemes[idxSubtheme].lessons[idxLesson].materials.Length; i++)
+        for (int i = 0; i < Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials.Length; i++)
         {
             //instantiate initialize
             GameObject item = Instantiate(prefabInfoItem, Vector3.zero, transform.rotation, parentTeacherInfo);
@@ -101,7 +105,7 @@ public class VRManager : NetworkBehaviour
             TMP_Text txtInfo = itemInfo.txtInfo;
 
             //assign value
-            txtInfo.text = Singleton.Instance.materialSubthemes[idxSubtheme].lessons[idxLesson].materials[i].materialName;
+            txtInfo.text = Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials[i].materialName;
             itemInfo.materialIndex = i;
 
         }
@@ -115,21 +119,24 @@ public class VRManager : NetworkBehaviour
         var type = material.materialType;
     }
 
-    void SetMaterialIndex(int index)
+    void SetMaterialIndex(int oldIndex, int newIndex)
     {
-        currentMaterialIndex = index;
-
+      //  StartMaterials(newIndex);
         //after this code is executed, due to syncVar, start materials function will be executed
     }
 
 
     //public void BeginLesson
-    void StartMaterials(int oldIndex, int newIndex)
+    void StartMaterials(int index)
     {
+        
+        currentMaterialIndex = index;
+
+        Debug.Log("st " + indexSubtheme + "  leson " + indexLesson + " pb " + currentMaterialIndex);
         Destroy(object3D);
         tvObject.SetActive(false);
         videoPlayer.Stop();
-        
+
         teacherGUI.SetActive(false);
 
         //registeredMaterials
@@ -140,7 +147,9 @@ public class VRManager : NetworkBehaviour
         {
             RenderSettings.skybox = selectedMaterial.skyBox;
             classItem.SetActive(false);
-        } else {
+        }
+        else
+        {
             RenderSettings.skybox = null;
             classItem.SetActive(true);
         }
