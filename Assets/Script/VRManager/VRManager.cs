@@ -11,11 +11,18 @@ public class VRManager : NetworkBehaviour
 {
     [SerializeField] GameObject teacherGUI;
     [SerializeField] GameObject tvObject;
+    [SerializeField] GameObject radioObject;
     [SerializeField] VideoPlayer videoPlayer;
+    [SerializeField] AudioSource audioPlayer;
+    [SerializeField] GameObject planeImage;
     [SerializeField] Transform parentTeacherInfo;
     [SerializeField] Transform object3DPos;
     [SerializeField] GameObject prefabInfoItem;
     [SerializeField] GameObject classItem;
+
+    [Header("Render textures")]
+    [SerializeField] RenderTexture renderTexTelevision;
+    [SerializeField] RenderTexture renderTexSkybox;
 
     [SyncVar(hook = nameof(SetMaterialIndex))] int currentMaterialIndex = 100;
     [SyncVar(hook = nameof(SetupCurrentIndexSubtheme))] int indexSubtheme = 0;
@@ -121,7 +128,7 @@ public class VRManager : NetworkBehaviour
 
     void SetMaterialIndex(int oldIndex, int newIndex)
     {
-      //  StartMaterials(newIndex);
+        //  StartMaterials(newIndex);
         //after this code is executed, due to syncVar, start materials function will be executed
     }
 
@@ -129,15 +136,8 @@ public class VRManager : NetworkBehaviour
     //public void BeginLesson
     void StartMaterials(int index)
     {
-        
         currentMaterialIndex = index;
-
-        Debug.Log("st " + indexSubtheme + "  leson " + indexLesson + " pb " + currentMaterialIndex);
-        Destroy(object3D);
-        tvObject.SetActive(false);
-        videoPlayer.Stop();
-
-        teacherGUI.SetActive(false);
+        ResetBehaviorToDefault();
 
         //registeredMaterials
         MaterialObject selectedMaterial = Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials[currentMaterialIndex];
@@ -154,23 +154,51 @@ public class VRManager : NetworkBehaviour
             classItem.SetActive(true);
         }
 
+        //switch by material type
         switch (selectedMaterial.materialType)
         {
             case MaterialObject.MaterialType.Type3D:
                 object3D = Instantiate(selectedMaterial.prefabObject, object3DPos.position, Quaternion.identity);
-                //setup interactions
+                //setup interactions here :
 
                 break;
             case MaterialObject.MaterialType.TypeVideo:
                 tvObject.SetActive(true);
+                videoPlayer.targetTexture = renderTexTelevision;
                 videoPlayer.clip = selectedMaterial.videoClip;
                 videoPlayer.Play();
 
                 break;
             case MaterialObject.MaterialType.TypeImage:
+                planeImage.SetActive(true);
+                planeImage.GetComponent<Image>().sprite = selectedMaterial.spriteImage;
+                //  planeImage.GetComponent<Renderer>().material.SetTexture("_MyTexture", selectedMaterial.textureImage);
+                break;
 
+            case MaterialObject.MaterialType.Type360Video:
+                //    videoPlayer.targetTexture = selectedMaterial.skyBoxRenderTex;
+                videoPlayer.targetTexture = renderTexSkybox;
+                videoPlayer.clip = selectedMaterial.videoClip;
+                videoPlayer.Play();
+                break;
+            case MaterialObject.MaterialType.TypeMusic:
+                radioObject.SetActive(true);
+                audioPlayer.clip = selectedMaterial.audioClip;
+                audioPlayer.Play();
                 break;
         }
+    }
+
+    
+    void ResetBehaviorToDefault()
+    {
+        Destroy(object3D);
+        tvObject.SetActive(false);
+        radioObject.SetActive(false);
+        planeImage.SetActive(false);
+        videoPlayer.Stop();
+        audioPlayer.Stop();
+        teacherGUI.SetActive(false);
     }
 
 
