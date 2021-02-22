@@ -12,6 +12,7 @@ public class VRManager : NetworkBehaviour
     [SerializeField] GameObject teacherGUI;
     [SerializeField] GameObject tvObject;
     [SerializeField] GameObject radioObject;
+    //   [SerializeField] GameObject studentTableObject;
     [SerializeField] VideoPlayer videoPlayer;
     [SerializeField] AudioSource audioPlayer;
     [SerializeField] GameObject planeImage;
@@ -19,7 +20,8 @@ public class VRManager : NetworkBehaviour
     [SerializeField] Transform object3DPos;
     [SerializeField] GameObject prefabInfoItem;
     [SerializeField] GameObject classItem;
-
+    [SerializeField] GameObject objDesc;
+    [SerializeField] TMP_Text txtDesc;
     [Header("Render textures")]
     [SerializeField] RenderTexture renderTexTelevision;
     [SerializeField] RenderTexture renderTexSkybox;
@@ -30,18 +32,31 @@ public class VRManager : NetworkBehaviour
 
 
     GameObject object3D;
+
+    bool isMainPos;
+    public Transform studentPos;
+    public Transform teacherPos;
+    GameObject player;
     // Start is called before the first frame update
+
+    void Start()
+    {
+
+    }
 
     public override void OnStartServer()
     {
-        base.OnStartServer();
+
+        Debug.Log("server started");
+        //  base.OnStartServer();
 
         SetupTeacherGUIPanel();
-        InitialClient();
+        // InitialClient();
     }
 
     public override void OnStartClient()
     {
+        Debug.Log("client started");
         base.OnStartClient();
         InitialClient();
     }
@@ -52,16 +67,21 @@ public class VRManager : NetworkBehaviour
         XRSettings.enabled = true;
         tvObject.SetActive(false);
         RenderSettings.skybox = null;
+        MapItemInfo.StartLesson += StartMaterials;
+
+        player = GameObject.FindGameObjectWithTag("Player");
+        Debug.Log(player.name);
     }
 
-    void OnEnable()
-    {
-        MapItemInfo.StartLesson += StartMaterials;
-    }
+    // void OnEnable()
+    // {
+    //     MapItemInfo.StartLesson += StartMaterials;
+    // }
 
     void OnDestroy()
     {
         MapItemInfo.StartLesson -= StartMaterials;
+        Debug.Log("des");
     }
 
     void SetupCurrentIndexSubtheme(int oldNum, int newNum)
@@ -90,6 +110,22 @@ public class VRManager : NetworkBehaviour
         {
             currentMaterialIndex = 2;
         }
+
+#if UNITY_EDITOR
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isMainPos = !isMainPos;
+
+            if (!isMainPos)
+            {
+                player.transform.position = teacherPos.position;
+            }
+            else
+            {
+                player.transform.position = studentPos.position;
+            }
+        }
+#endif
     }
 
     void SetupTeacherGUIPanel()
@@ -128,7 +164,7 @@ public class VRManager : NetworkBehaviour
 
     void SetMaterialIndex(int oldIndex, int newIndex)
     {
-        //  StartMaterials(newIndex);
+          StartMaterials(newIndex);
         //after this code is executed, due to syncVar, start materials function will be executed
     }
 
@@ -141,6 +177,7 @@ public class VRManager : NetworkBehaviour
 
         //registeredMaterials
         MaterialObject selectedMaterial = Singleton.Instance.materialSubthemes[indexSubtheme].lessons[indexLesson].materials[currentMaterialIndex];
+        //    studentTableObject.SetActive(false);
 
         //setup skybox
         if (selectedMaterial.skyBox != null)
@@ -153,6 +190,14 @@ public class VRManager : NetworkBehaviour
             RenderSettings.skybox = null;
             classItem.SetActive(true);
         }
+
+        //setup description
+        if (!string.IsNullOrEmpty(selectedMaterial.description))
+        {
+            objDesc.SetActive(true);
+            txtDesc.text = selectedMaterial.description;
+        }
+
 
         //switch by material type
         switch (selectedMaterial.materialType)
@@ -189,12 +234,15 @@ public class VRManager : NetworkBehaviour
         }
     }
 
-    
+
     void ResetBehaviorToDefault()
     {
+        Debug.Log("reset to default");
         Destroy(object3D);
         tvObject.SetActive(false);
         radioObject.SetActive(false);
+        objDesc.SetActive(false);
+        //     studentTableObject.SetActive(true);
         planeImage.SetActive(false);
         videoPlayer.Stop();
         audioPlayer.Stop();

@@ -8,6 +8,8 @@ using UnityEngine.Video;
 public class MaterialObject : ScriptableObject
 {
     public string materialName;
+    [TextArea]
+    public string description;
     public enum MaterialType { Type3D, TypeVideo, TypeImage, Type360Video, TypeMusic };
     public MaterialType materialType;
     public Sprite spriteImage;

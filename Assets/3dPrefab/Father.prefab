@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1661681541074859758}
+  - component: {fileID: -2858236801560229664}
   m_Layer: 0
   m_Name: Father
   m_TagString: Untagged
@@ -24,13 +25,45 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3590483712403344548}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1.6, z: 1.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5654918753601855938}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-2858236801560229664
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3590483712403344548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df5e218e44fe4644a4f2384667f5a01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isSpinning: 1
+  spinSpeed: 2
+  materialObject: {fileID: 0}
+  mapInfos:
+  - collider: {fileID: 0}
+    txtInfo: 
+    OnReticleHover:
+      m_PersistentCalls:
+        m_Calls: []
+    OnReticleHit:
+      m_PersistentCalls:
+        m_Calls: []
+  - collider: {fileID: 0}
+    txtInfo: 
+    OnReticleHover:
+      m_PersistentCalls:
+        m_Calls: []
+    OnReticleHit:
+      m_PersistentCalls:
+        m_Calls: []
 --- !u!1 &8054106876600490872
 GameObject:
   m_ObjectHideFlags: 0
@@ -56,13 +89,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8054106876600490872}
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0.7071068, w: 0}
   m_LocalPosition: {x: 0, y: -0.938, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1661681541074859758}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90.00001, y: 180, z: 0}
 --- !u!33 &8528464340247077577
 MeshFilter:
   m_ObjectHideFlags: 0

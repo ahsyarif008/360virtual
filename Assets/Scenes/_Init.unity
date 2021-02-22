@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!108 &500676949
 Light:
   m_ObjectHideFlags: 0
@@ -449,6 +449,8 @@ MonoBehaviour:
   networkDiscovery: {fileID: 1518223514}
   materialSubthemes:
   - {fileID: 11400000, guid: acc4d6b2de8895f41aba85768dbebf40, type: 2}
+  - {fileID: 11400000, guid: 937f133f5bf0d0f4bb0074c09c9bfc09, type: 2}
+  - {fileID: 11400000, guid: 4d7448d4e1c78d3489fe41e64253339f, type: 2}
   indexSubtheme: 100
   indexLesson: 100
 --- !u!4 &1919597838

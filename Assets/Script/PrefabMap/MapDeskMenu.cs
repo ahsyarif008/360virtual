@@ -55,8 +55,10 @@ public class MapDeskMenu : MonoBehaviour
     {
         MyNetworkManager networkManager = Singleton.Instance.networkManager;
         networkManager.StopHost();
+        networkManager.StopServer();
+        networkManager.StopClient();
 
-        SceneManager.LoadScene("Title");
+      //  SceneManager.LoadScene("Title");
 
     }
 
