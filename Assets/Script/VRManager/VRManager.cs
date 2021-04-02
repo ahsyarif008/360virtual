@@ -37,6 +37,9 @@ public class VRManager : NetworkBehaviour
     public Transform studentPos;
     public Transform teacherPos;
     GameObject player;
+
+    [Header("custom object")]
+    [SerializeField] Animator doorAnimation;
     // Start is called before the first frame update
 
     void Start()
@@ -164,7 +167,7 @@ public class VRManager : NetworkBehaviour
 
     void SetMaterialIndex(int oldIndex, int newIndex)
     {
-          StartMaterials(newIndex);
+        StartMaterials(newIndex);
         //after this code is executed, due to syncVar, start materials function will be executed
     }
 
@@ -230,6 +233,10 @@ public class VRManager : NetworkBehaviour
                 radioObject.SetActive(true);
                 audioPlayer.clip = selectedMaterial.audioClip;
                 audioPlayer.Play();
+                break;
+            case MaterialObject.MaterialType.TypeCursor:
+                //selectedMaterial.cursorAnimator.enabled = true;
+                doorAnimation.enabled = true;
                 break;
         }
     }
