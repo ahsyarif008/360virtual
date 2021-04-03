@@ -1,5 +1,86 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1679879058
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1679879059}
+  - component: {fileID: 1679879060}
+  m_Layer: 0
+  m_Name: Cursor (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1679879059
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679879058}
+  m_LocalRotation: {x: -0.115585804, y: 0.5409072, z: -0.25181487, w: 0.7941339}
+  m_LocalPosition: {x: -0.571, y: -0.5058, z: 0.336}
+  m_LocalScale: {x: -0.17664756, y: 0.17664757, z: 0.17664756}
+  m_Children: []
+  m_Father: {fileID: 4036535285365145502}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 5.097, y: 67.067, z: -31.808}
+--- !u!212 &1679879060
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679879058}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: e2d6cae60732d3847a712ea469d37cd5, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 2.7, y: 3}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
 --- !u!1 &546940540194352572
 GameObject:
   m_ObjectHideFlags: 0
@@ -1982,6 +2063,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4036535285365145502}
   - component: {fileID: 2357795654237315269}
+  - component: {fileID: 1307702713}
   m_Layer: 0
   m_Name: Ayunan
   m_TagString: Untagged
@@ -2002,6 +2084,7 @@ Transform:
   m_Children:
   - {fileID: 2357795653902812574}
   - {fileID: 8038434862122916717}
+  - {fileID: 1679879059}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2017,7 +2100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4df5e218e44fe4644a4f2384667f5a01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isSpinning: 1
+  isSpinning: 0
   spinSpeed: 2
   materialObject: {fileID: 11400000, guid: 9fdf4d8728f67a141a15ea72bce09872, type: 2}
   mapInfos:
@@ -2029,6 +2112,25 @@ MonoBehaviour:
     OnReticleHit:
       m_PersistentCalls:
         m_Calls: []
+--- !u!95 &1307702713
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4036535285365145503}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 893405da53aab22438923db7392dabbb, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &4036535285778543806
 GameObject:
   m_ObjectHideFlags: 0
