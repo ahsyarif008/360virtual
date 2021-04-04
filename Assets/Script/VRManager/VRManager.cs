@@ -207,7 +207,13 @@ public class VRManager : NetworkBehaviour
         {
             case MaterialObject.MaterialType.Type3D:
                 object3D = Instantiate(selectedMaterial.prefabObject, object3DPos.position, Quaternion.identity);
-                //setup interactions here :
+
+                break;
+            case MaterialObject.MaterialType.Type3DWithVideoSkybox:
+                object3D = Instantiate(selectedMaterial.prefabObject, object3DPos.position, Quaternion.identity);
+                videoPlayer.targetTexture = renderTexSkybox;
+                videoPlayer.clip = selectedMaterial.videoClip;
+                videoPlayer.Play();
 
                 break;
             case MaterialObject.MaterialType.TypeVideo:
