@@ -19,12 +19,12 @@ public class MainMenu : MonoBehaviour
     public Text btnClientLabel, txtClientTitle;
     public GameObject learningSelectScreen, passwordScreen;
 
-    enum AppState { main, pengembang, petunjuk, selectMode, selectMateri, selectRoom };
+    enum AppState { main, pengembang, petunjuk, selectMode, selectMateri, selectRoom, exitPrompt };
     AppState appState;
 
     //game component
     GameObject[] screens;
-    public GameObject modeUI, materiUI, pengembangUI, petunjukUI, roomUI;
+    public GameObject modeUI, materiUI, pengembangUI, petunjukUI, roomUI, exitAppUI;
     public GameObject loadingScreen, btnBack, btnClientStart;
 
     public MyNetworkManager networkManager;
@@ -40,7 +40,7 @@ public class MainMenu : MonoBehaviour
         networkDiscovery = Singleton.Instance.networkDiscovery;
 
 
-        screens = new GameObject[] { modeUI, materiUI, pengembangUI, petunjukUI, roomUI };
+        screens = new GameObject[] { modeUI, materiUI, pengembangUI, petunjukUI, roomUI, exitAppUI };
         NavigateTo("main");
         SetupLessonMenuList();
     }
@@ -82,7 +82,7 @@ public class MainMenu : MonoBehaviour
                 mapItemMenuLesson.btnAction.onClick.RemoveAllListeners();
                 mapItemMenuLesson.btnAction.onClick.AddListener(() =>
                 {
-                    Singleton.Instance.SetUsageIndex(x,y);
+                    Singleton.Instance.SetUsageIndex(x, y);
                     networkManager.StartHost();
                 });
             }
@@ -132,6 +132,9 @@ public class MainMenu : MonoBehaviour
             case AppState.selectMode:
                 NavigateTo("main");
                 break;
+            case AppState.exitPrompt:
+                NavigateTo("main");
+                break;
         }
     }
 
@@ -170,10 +173,20 @@ public class MainMenu : MonoBehaviour
                 break;
             case "kuis":
                 loadingScreen.SetActive(true);
-                loadingScreen.SetActive(true);
                 SceneManager.LoadScene("Quiz");
                 break;
+            case "exit":
+                appState = AppState.exitPrompt;
+                exitAppUI.SetActive(true);
+                break;
         }
+    }
+
+
+    public void ExitApp()
+    {
+        Debug.Log("quitting");
+        Application.Quit();
     }
 
 }
