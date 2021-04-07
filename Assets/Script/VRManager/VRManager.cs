@@ -40,6 +40,9 @@ public class VRManager : NetworkBehaviour
 
     [Header("custom object")]
     [SerializeField] Animator doorAnimation;
+    [SerializeField] GameObject tangerangEffect;
+    [SerializeField] GameObject baliEffect;
+    [SerializeField] GameObject sumateraEffect;
     // Start is called before the first frame update
 
     void Start()
@@ -229,6 +232,23 @@ public class VRManager : NetworkBehaviour
                 //  planeImage.GetComponent<Renderer>().material.SetTexture("_MyTexture", selectedMaterial.textureImage);
                 break;
 
+            case MaterialObject.MaterialType.TypeImageWithPinpoint:
+                planeImage.SetActive(true);
+                planeImage.GetComponent<Image>().sprite = selectedMaterial.spriteImage;
+                switch (selectedMaterial.materialName)
+                {
+                    case "Peta Tangerang":
+                        tangerangEffect.SetActive(true);
+                        break;
+                    case "Peta Indonesia":
+                        baliEffect.SetActive(true);
+                        break;
+                    case "Peta Sumatera":
+                        sumateraEffect.SetActive(true);
+                        break;
+                }
+                break;
+
             case MaterialObject.MaterialType.Type360Video:
                 //    videoPlayer.targetTexture = selectedMaterial.skyBoxRenderTex;
                 videoPlayer.targetTexture = renderTexSkybox;
@@ -257,6 +277,9 @@ public class VRManager : NetworkBehaviour
         objDesc.SetActive(false);
         //     studentTableObject.SetActive(true);
         planeImage.SetActive(false);
+        tangerangEffect.SetActive(false);
+        sumateraEffect.SetActive(false);
+        baliEffect.SetActive(false);
         videoPlayer.Stop();
         audioPlayer.Stop();
         teacherGUI.SetActive(false);
